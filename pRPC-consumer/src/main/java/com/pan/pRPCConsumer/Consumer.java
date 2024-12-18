@@ -1,11 +1,13 @@
 package com.pan.pRPCConsumer;
 
+import com.pan.pPRCBase.proxy.ServiceProxyFactory;
 import com.pan.pRPCCommon.model.User;
 import com.pan.pRPCCommon.service.UserService;
 
 public class Consumer {
     public static void main(String[] args) {
-        UserService userService = null;
+        // 动态代理
+        UserService userService = ServiceProxyFactory.getProxy(UserService.class);
         User user = new User();
         user.setName("潘");
 

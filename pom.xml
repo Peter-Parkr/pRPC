@@ -12,6 +12,7 @@
         <module>pRPC-common</module>
         <module>pRPC-provider</module>
         <module>pRPC-consumer</module>
+        <module>pRPC-base</module>
     </modules>
 
     <dependencies>
