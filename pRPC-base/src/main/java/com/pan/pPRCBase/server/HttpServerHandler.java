@@ -1,7 +1,7 @@
 package com.pan.pPRCBase.server;
 
 
-import com.pan.pPRCBase.model.RpcRequest;
+import com.pan.pPRCBase.model.RPCRequest;
 import com.pan.pPRCBase.model.RpcResponse;
 import com.pan.pPRCBase.registry.LocalRegistry;
 import com.pan.pPRCBase.serializer.JDKSerializer;
@@ -28,9 +28,9 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
         httpServerRequest.bodyHandler(body -> {
             // 反序列化
             byte[] bytes = body.getBytes();
-            RpcRequest rpcRequest = null;
+            RPCRequest rpcRequest = null;
             try {
-                rpcRequest = serializer.deserialize(bytes, RpcRequest.class);
+                rpcRequest = serializer.deserialize(bytes, RPCRequest.class);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

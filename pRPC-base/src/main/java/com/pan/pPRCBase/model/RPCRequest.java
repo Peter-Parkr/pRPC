@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RpcRequest implements Serializable {
+public class RPCRequest implements Serializable {
     // 服务名称
     public String serviceName;
     // 方法名称
