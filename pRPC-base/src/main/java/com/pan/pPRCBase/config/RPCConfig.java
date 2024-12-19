@@ -1,5 +1,6 @@
 package com.pan.pPRCBase.config;
 
+import com.pan.pPRCBase.serializer.SerializerKeys;
 import lombok.Data;
 
 /**
@@ -31,4 +32,11 @@ public class RPCConfig {
      * 模拟调用 mock
      */
     private boolean mock = false;
+
+
+    /**
+     * 序列化器
+     */
+    private String serializer = SerializerKeys.JDK;
+
 }

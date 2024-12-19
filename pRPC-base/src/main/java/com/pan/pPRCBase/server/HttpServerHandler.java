@@ -1,16 +1,19 @@
 package com.pan.pPRCBase.server;
 
 
+import com.pan.pPRCBase.RPCApplication;
 import com.pan.pPRCBase.model.RPCRequest;
 import com.pan.pPRCBase.model.RpcResponse;
 import com.pan.pPRCBase.registry.LocalRegistry;
 import com.pan.pPRCBase.serializer.JDKSerializer;
 import com.pan.pPRCBase.serializer.Serializer;
+import com.pan.pPRCBase.serializer.SerializerFactory;
 import io.vertx.core.Handler;
 import io.vertx.core.buffer.Buffer;
 import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.lang.reflect.Method;
 
@@ -21,7 +24,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
     @Override
     public void handle(HttpServerRequest httpServerRequest) {
         // 指定序列化器
-        final Serializer serializer = new JDKSerializer();
+        final Serializer serializer = SerializerFactory.getInstance(RPCApplication.getRpcConfig().getSerializer());
         // 记录日志
         System.out.println("接受请求: " + httpServerRequest.method() + " " + httpServerRequest.uri());
         // 异步处理 Http 请求
@@ -30,7 +33,7 @@ public class HttpServerHandler implements Handler<HttpServerRequest> {
             byte[] bytes = body.getBytes();
             RPCRequest rpcRequest = null;
             try {
-                rpcRequest = serializer.deserialize(bytes, RPCRequest.class);
+                rpcRequest = (RPCRequest) serializer.deserialize(bytes, RPCRequest.class);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
