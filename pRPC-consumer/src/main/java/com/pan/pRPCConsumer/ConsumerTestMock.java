@@ -1,6 +1,6 @@
 package com.pan.pRPCConsumer;
 
-import com.pan.pPRCBase.proxy.ServiceProxyFactory;
+import com.pan.pRPCBase.proxy.ServiceProxyFactory;
 import com.pan.pRPCCommon.model.User;
 import com.pan.pRPCCommon.service.UserService;
 

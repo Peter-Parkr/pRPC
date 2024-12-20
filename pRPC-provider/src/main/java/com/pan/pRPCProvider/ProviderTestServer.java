@@ -1,7 +1,7 @@
 package com.pan.pRPCProvider;
 
-import com.pan.pPRCBase.registry.LocalRegistry;
-import com.pan.pPRCBase.server.VertxHttpServer;
+import com.pan.pRPCBase.registry.LocalRegistry;
+import com.pan.pRPCBase.server.VertxHttpServer;
 import com.pan.pRPCCommon.service.UserService;
 
 public class ProviderTestServer {

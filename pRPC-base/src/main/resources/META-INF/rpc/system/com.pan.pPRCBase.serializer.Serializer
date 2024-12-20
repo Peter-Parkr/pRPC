@@ -1,4 +1,0 @@
-jdk=com.pan.pPRCBase.serializer.JDKSerializer
-hessian=com.pan.pPRCBase.serializer.HessianSerializer
-json=com.pan.pPRCBase.serializer.JsonSerializer
-kryo=com.pan.pPRCBase.serializer.KryoSerializer

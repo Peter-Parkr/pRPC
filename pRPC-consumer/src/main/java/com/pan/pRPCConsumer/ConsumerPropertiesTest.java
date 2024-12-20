@@ -1,7 +1,7 @@
 package com.pan.pRPCConsumer;
 
-import com.pan.pPRCBase.config.RPCConfig;
-import com.pan.pPRCBase.utils.ConfigUtils;
+import com.pan.pRPCBase.config.RPCConfig;
+import com.pan.pRPCBase.utils.ConfigUtils;
 
 public class ConsumerPropertiesTest {
     public static void main(String[] args) {
