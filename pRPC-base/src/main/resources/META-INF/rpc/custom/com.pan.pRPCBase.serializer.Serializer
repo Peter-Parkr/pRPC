@@ -1,0 +1,4 @@
+jdk=com.pan.pRPCBase.serializer.JDKSerializer
+hessian=com.pan.pRPCBase.serializer.HessianSerializer
+json=com.pan.pRPCBase.serializer.JsonSerializer
+kryo=com.pan.pRPCBase.serializer.KryoSerializer
