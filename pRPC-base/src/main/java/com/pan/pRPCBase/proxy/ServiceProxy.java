@@ -6,6 +6,8 @@ import cn.hutool.http.HttpResponse;
 import com.pan.pRPCBase.RPCApplication;
 import com.pan.pRPCBase.config.RPCConfig;
 import com.pan.pRPCBase.constant.RPCConstant;
+import com.pan.pRPCBase.loadbalancer.LoadBalancer;
+import com.pan.pRPCBase.loadbalancer.LoadBalancerFactory;
 import com.pan.pRPCBase.model.RPCRequest;
 import com.pan.pRPCBase.model.RpcResponse;
 import com.pan.pRPCBase.model.ServiceMetaInfo;
@@ -13,11 +15,14 @@ import com.pan.pRPCBase.registry.Registry;
 import com.pan.pRPCBase.registry.RegistryFactory;
 import com.pan.pRPCBase.serializer.Serializer;
 import com.pan.pRPCBase.serializer.SerializerFactory;
+import com.pan.pRPCBase.server.tcp.VertxTcpClient;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * JDK 动态代理
@@ -55,16 +60,16 @@ public class ServiceProxy implements InvocationHandler {
             if (CollUtil.isEmpty(serviceMetaInfoList)) {
                 throw new RuntimeException("暂无服务地址");
             }
-            // 暂时先取第一个
-            ServiceMetaInfo selectedServiceMetaInfo = serviceMetaInfoList.get(0);
-            try (HttpResponse httpResponse = HttpRequest.post(selectedServiceMetaInfo.getServiceAddress())
-                    .body(bodyBytes)
-                    .execute()) {
-                byte[] result = httpResponse.bodyBytes();
-                // 反序列化
-                RpcResponse rpcResponse = (RpcResponse) serializer.deserialize(result, RpcResponse.class);
-                return rpcResponse.getData();
-            }
+            // 负载均衡
+            LoadBalancer loadBalancer = LoadBalancerFactory.getInstance(rpcConfig.getLoadBalancer());
+            // 将调用方法名（请求路径）作为负载均衡参数
+            Map<String, Object> requestParams = new HashMap<>();
+            requestParams.put("methodName", rpcRequest.getMethodName());
+            ServiceMetaInfo selectedServiceMetaInfo = loadBalancer.select(requestParams, serviceMetaInfoList);
+
+            // rpc 请求
+            RpcResponse rpcResponse = VertxTcpClient.doRequest(rpcRequest, selectedServiceMetaInfo);
+            return rpcResponse.getData();
         } catch (IOException e) {
             e.printStackTrace();
         }

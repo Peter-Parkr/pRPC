@@ -1,0 +1,3 @@
+roundRobin=com.pan.pRPCBase.loadbalancer.RoundRobinLoadBalancer
+random=com.pan.pRPCBase.loadbalancer.RandomLoadBalancer
+consistentHash=com.pan.pRPCBase.loadbalancer.ConsistentHashLoadBalancer
